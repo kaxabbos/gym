@@ -1,4 +1,7 @@
 .idea
 target
-src/main/resources/img/*
+src/main/resources/img/subs/*
+src/main/resources/img/trainers/*
+!src/main/resources/img/subs
+!src/main/resources/img/trainers
 !src/main/resources/img/bg.jpg
