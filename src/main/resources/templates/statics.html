@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Статистика - GYM</title>
+</head>
+<head th:insert="blocks/head :: head"></head>
+<body>
+<div th:insert="blocks/nav :: nav"></div>
+<section class="text-center bg-light testimonials">
+    <div class="container">
+        <h2 class="mb-5">Статистика</h2>
+        <div class="d-xl-flex justify-content-xl-center">
+            <div class="row" style="max-width: 500px;">
+                <div class="col">
+                    <p class="text-start text-nowrap" style="font-size: 20px;">Суммарная прибыль</p>
+                </div>
+                <div class="col">
+                    <p class="text-end" style="font-size: 20px;" th:text="${income}"></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>Название</h3>
+            </div>
+            <div class="col-xl-1">
+                <h3>|</h3>
+            </div>
+            <div class="col">
+                <h3>Цена</h3>
+            </div>
+            <div class="col-xl-1">
+                <h3>|</h3>
+            </div>
+            <div class="col">
+                <h3>Количество</h3>
+            </div>
+            <div class="col-xl-1">
+                <h3>|</h3>
+            </div>
+            <div class="col">
+                <h3>Прибыль</h3>
+            </div>
+        </div>
+        <div th:each="stat : ${statics}" class="row">
+            <div class="col">
+                <p class="text-start" style="font-size: 20px;" th:text="${stat.getSubs().name}"></p>
+            </div>
+            <div class="col-xl-1">
+                <h3>|</h3>
+            </div>
+            <div class="col">
+                <p class="text-end" style="font-size: 20px;" th:text="${stat.getSubs().price}"></p>
+            </div>
+            <div class="col-xl-1">
+                <h3>|</h3>
+            </div>
+            <div class="col">
+                <p class="text-end" style="font-size: 20px;"  th:text="${stat.count}"></p>
+            </div>
+            <div class="col-xl-1">
+                <h3>|</h3>
+            </div>
+            <div class="col">
+                <p class="text-end" style="font-size: 20px;" th:text="${stat.getSubs().price * stat.count}"></p>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:insert="blocks/footer :: footer" class="bg-light footer"></footer>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bs-init.js"></script>
+</body>
+
+</html>

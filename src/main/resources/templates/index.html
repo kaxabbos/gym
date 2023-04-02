@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Главная - GYM</title>
+</head>
+<head th:insert="blocks/head :: head"></head>
+<body>
+<div th:insert="blocks/nav :: nav"></div>
+<header class="text-center text-white masthead"
+        style="background: url(&quot;/img/bg.jpg&quot;) center / cover;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto position-relative">
+                <h1 class="mb-5" style="background: rgba(0,0,0,0.7);">GYM</h1>
+            </div>
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto position-relative">
+                <p style="background: rgba(0,0,0,0.7);">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Molestias, qui unde. Architecto autem blanditiis dolorum ducimus ex explicabo, inventore laboriosam
+                    laborum maxime obcaecati, porro possimus qui rerum sequi vitae voluptas?</p>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="text-center bg-light features-icons">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-xl-6">
+                <div class="mx-auto features-icons-item mb-5 mb-lg-0 mb-lg-3">
+                    <div class="d-flex features-icons-icon"><i class="icon-call-in m-auto text-primary"
+                                                               data-bss-hover-animate="pulse"></i></div>
+                    <h3>Телефон номер</h3>
+                    <p class="lead mb-0"><strong>&nbsp;+999 (99) 999-99-99</strong><br></p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xl-6">
+                <div class="mx-auto features-icons-item mb-5 mb-lg-0 mb-lg-3">
+                    <div class="d-flex features-icons-icon"><i class="icon-map m-auto text-primary"
+                                                               data-bss-hover-animate="pulse"></i></div>
+                    <h3>Адрес</h3>
+                    <p class="lead mb-0">Минск, Минск</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="text-center bg-light testimonials">
+    <div class="container">
+        <h2 class="mb-5">Тренеры</h2>
+        <div th:if="${role == 'MANAGER'}" class="row" style="margin: 10px -12px;">
+            <div class="col-lg-4 col-xl-12"><a class="btn btn-primary" role="button" href="/trainers/add">Добавить
+                тренера</a>
+                <div class="mx-auto testimonial-item mb-5 mb-lg-0"></div>
+            </div>
+        </div>
+        <div th:each="trainer : ${trainers}" class="row" style="margin-bottom: 10px;">
+            <div class="col">
+                <div class="mx-auto testimonial-item mb-5 mb-lg-0">
+                    <img class="rounded-circle img-fluid mb-3" th:src="'/img/' + ${trainer.file}">
+                    <h5 th:text="${trainer.name}"></h5>
+                </div>
+            </div>
+            <div class="col">
+                <p class="font-weight-light mb-0" style="text-align: left;font-size: 20px;">Тел: +<span th:text="${trainer.tel}"></span></p>
+                <p class="font-weight-light mb-0" style="text-align: left;font-size: 20px;">Опыт работы: <span th:text="${trainer.exp}"></span> лет</p>
+                <p class="font-weight-light mb-0" style="text-align: left;font-size: 20px;">Специализация: <span th:text="${trainer.spec}"></span></p>
+                <p class="font-weight-light mb-0" style="text-align: left;font-size: 20px;">Достижения: <span th:text="${trainer.ach}"></span></p>
+                <p class="font-weight-light mb-0" style="text-align: left;font-size: 20px;">Стоимость персональной
+                    тренировки: <span th:text="${trainer.price}"></span></p>
+            </div>
+            <div th:if="${role == 'MANAGER'}" class="col" style="max-width: 270px;">
+                <a class="btn btn-primary" role="button" style="margin-right: 15px;"
+                   th:href="'/trainers/edit/' + ${trainer.id}">Редактировать</a>
+                <a class="btn btn-danger" role="button" th:href="'/trainers/delete/' + ${trainer.id}">Удалить</a></div>
+        </div>
+    </div>
+</section>
+<footer th:insert="blocks/footer :: footer" class="bg-light footer"></footer>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bs-init.js"></script>
+</body>
+
+</html>

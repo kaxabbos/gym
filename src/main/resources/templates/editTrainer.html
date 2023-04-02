@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Редактировать тренера - GYM</title>
+</head>
+<head th:insert="blocks/head :: head"></head>
+<body>
+<div th:insert="blocks/nav :: nav"></div>
+<section class="text-center bg-light testimonials">
+    <div class="container">
+        <div th:if="${message}" class="alert alert-warning" role="alert">
+            <strong th:text="${message}"></strong>
+        </div>
+        <h2 class="mb-5">Редактировать тренера</h2>
+        <form th:action="'/trainers/edit/' + ${trainer.id}" method="post" enctype="multipart/form-data">
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col">
+                    <div class="row d-xl-flex align-items-xl-center">
+                        <div class="col-xl-4"><span>Имя</span></div>
+                        <div class="col-xl-8"><input class="form-control" type="text" name="name" required=""
+                                                     th:value="${trainer.name}"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row d-xl-flex align-items-xl-center">
+                        <div class="col-xl-4"><span>Стоимость персональной тренировки</span></div>
+                        <div class="col-xl-8"><input class="form-control" type="number" name="price" min="0" max="500"
+                                                     step="1" value="0" required="" th:value="${trainer.price}"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col">
+                    <div class="row d-xl-flex align-items-xl-center">
+                        <div class="col-xl-4"><span>Достижения</span></div>
+                        <div class="col-xl-8"><input class="form-control" type="text" name="ach" required=""
+                                                     th:value="${trainer.ach}"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row d-xl-flex align-items-xl-center">
+                        <div class="col-xl-4"><span>Телефон<br>(999 99 999 99 99)</span></div>
+                        <div class="col-xl-8">
+                            <input onchange="this.value=addSpaces(this.value);"
+                                   pattern="[0-9]{3} [0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2}" class="form-control"
+                                   type="tel" name="tel" required="" th:value="${trainer.tel}"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col">
+                    <div class="row d-xl-flex align-items-xl-center">
+                        <div class="col-xl-4"><span>Опыт работы (лет)</span></div>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="number"
+                                   name="exp" min="1" max="50"
+                                   step="1" value="1" required="" th:value="${trainer.exp}"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row d-xl-flex align-items-xl-center">
+                        <div class="col-xl-4"><span>Специализация</span></div>
+                        <div class="col-xl-8"><input class="form-control" type="text" name="spec" required=""
+                                                     th:value="${trainer.spec}"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col">
+                    <div class="row d-xl-flex align-items-xl-center">
+                        <div class="col-xl-2"><span>Фотография</span></div>
+                        <div class="col-xl-10"><input class="form-control" type="file" name="file"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-xl-flex" style="margin-bottom: 10px;">
+                <div class="col d-xl-flex justify-content-xl-start">
+                    <button class="btn btn-primary" type="submit" style="margin-right: 10px;">Изменить</button>
+                    <button class="btn btn-dark" type="reset">Очистить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<footer th:insert="blocks/footer :: footer" class="bg-light footer"></footer>
+<script src="/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    function addSpaces(initial) {
+        initial.replace("/([0-9]{3})/", "\1 ");
+        initial.replace("/([0-9]{2})/", "\1 ");
+        initial.replace("/([0-9]{3})/", "\1 ");
+        initial.replace("/[0-9]{2} ([0-9]{2})/", "\1 ");
+        return initial;
+    }
+</script>
+<script src="/js/bs-init.js"></script>
+</body>
+
+</html>
