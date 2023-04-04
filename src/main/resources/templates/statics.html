@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Статистика - GYM</title>
+    <title>Статистика</title>
 </head>
 <head th:insert="blocks/head :: head"></head>
 <body>
@@ -45,13 +45,13 @@
         </div>
         <div th:each="stat : ${statics}" class="row">
             <div class="col">
-                <p class="text-start" style="font-size: 20px;" th:text="${stat.getSubs().name}"></p>
+                <p class="text-start" style="font-size: 20px;" th:text="${stat.sub.name}"></p>
             </div>
             <div class="col-xl-1">
                 <h3>|</h3>
             </div>
             <div class="col">
-                <p class="text-end" style="font-size: 20px;" th:text="${stat.getSubs().price}"></p>
+                <p class="text-end" style="font-size: 20px;" th:text="${stat.sub.price}"></p>
             </div>
             <div class="col-xl-1">
                 <h3>|</h3>
@@ -63,7 +63,7 @@
                 <h3>|</h3>
             </div>
             <div class="col">
-                <p class="text-end" style="font-size: 20px;" th:text="${stat.getSubs().price * stat.count}"></p>
+                <p class="text-end" style="font-size: 20px;" th:text="${stat.sub.price * stat.count}"></p>
             </div>
         </div>
     </div>

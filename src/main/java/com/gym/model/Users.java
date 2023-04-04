@@ -11,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -31,15 +30,8 @@ public class Users implements UserDetails {
     private String username;
     private String password;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "users_subs",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "subs_id")
-    )
-    private List<Subs> subs = new ArrayList<>();
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Purchased> purchased;
 
     public Users(String username, String password, Role role) {
         this.role = role;
@@ -47,17 +39,8 @@ public class Users implements UserDetails {
         this.password = passwordEncoder().encode(password);
     }
 
-    public void addSub(Subs sub) {
-        this.subs.add(sub);
-        sub.getUsers().add(this);
-    }
-
-    public void removeSub(Subs sub) {
-        this.subs.remove(sub);
-    }
-
     public boolean inMySubs(Long subId) {
-        return this.getSubs().stream().filter(sub -> sub.getId().equals(subId)).toList().size() > 0;
+        return this.purchased.stream().filter(p -> p.getSub().getId().equals(subId)).toList().size() > 0;
     }
 
     @Override

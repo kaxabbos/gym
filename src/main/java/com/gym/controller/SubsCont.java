@@ -1,9 +1,8 @@
 package com.gym.controller;
 
 import com.gym.controller.main.Attributes;
-import com.gym.model.Statics;
+import com.gym.model.Purchased;
 import com.gym.model.Subs;
-import com.gym.model.Users;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 @Controller
@@ -31,19 +29,20 @@ public class SubsCont extends Attributes {
 
     @GetMapping("/my/delete/{id}")
     public String SubMyDelete(@PathVariable Long id) {
-        Users user = getUser();
-        user.removeSub(subsRepo.getReferenceById(id));
-        usersRepo.save(user);
+        purchasedRepo.deleteById(id);
         return "redirect:/subs/my";
     }
 
-    @GetMapping("/buy/{id}")
-    public String SubBuy(@PathVariable Long id) {
-        Users users = getUser();
-        Subs subs = subsRepo.getReferenceById(id);
-        users.addSub(subs);
-        subs.getStatics().setCount(subs.getStatics().getCount() + 1);
-        usersRepo.save(users);
+    @PostMapping("/buy/{id}")
+    public String SubBuy(@RequestParam Long trainerId, @PathVariable Long id) {
+        Subs sub = subsRepo.getReferenceById(id);
+        sub.getStatics().setCount(sub.getStatics().getCount() + 1);
+        subsRepo.save(sub);
+        if (trainerId == 0) {
+            purchasedRepo.save(new Purchased(sub, getUser(), null));
+        } else {
+            purchasedRepo.save(new Purchased(sub, getUser(), trainersRepo.getReferenceById(trainerId)));
+        }
         return "redirect:/subs";
     }
 
@@ -61,12 +60,7 @@ public class SubsCont extends Attributes {
 
     @GetMapping("/delete/{id}")
     public String SubDelete(@PathVariable Long id) {
-        Subs subs = subsRepo.getReferenceById(id);
-        Set<Users> usersList = subs.getUsers();
-        for (Users i : usersList) {
-            i.removeSub(subs);
-        }
-        subsRepo.delete(subs);
+        subsRepo.deleteById(id);
         return "redirect:/subs";
     }
 
@@ -90,11 +84,7 @@ public class SubsCont extends Attributes {
             }
         }
 
-        Subs sub = new Subs(name, price, term, pause, start_by, before, res, description);
-        Statics statics = new Statics();
-        sub.setStatics(statics);
-        statics.setSubs(sub);
-        subsRepo.save(sub);
+        subsRepo.save(new Subs(name, price, term, pause, start_by, before, res, description));
 
         return "redirect:/subs/add";
     }

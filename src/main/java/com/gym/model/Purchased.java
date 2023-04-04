@@ -9,9 +9,9 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
-public class Statics {
+@Entity
+public class Purchased {
     @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,10 +20,14 @@ public class Statics {
 
     @OneToOne(fetch = FetchType.LAZY)
     private Subs sub;
-    private int count;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Users owner;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Trainers trainer;
 
-    public Statics(Subs sub) {
+    public Purchased(Subs sub, Users owner, Trainers trainer) {
         this.sub = sub;
-        this.count = 0;
+        this.owner = owner;
+        this.trainer = trainer;
     }
 }

@@ -32,11 +32,12 @@ public class Attributes extends Main {
     protected void AddAttributesSubs(Model model) {
         AddAttributes(model);
         model.addAttribute("subs", subsRepo.findAll());
+        model.addAttribute("trainers", trainersRepo.findAll());
     }
 
     protected void AddAttributesSubsMy(Model model) {
         AddAttributes(model);
-        model.addAttribute("subs", getUser().getSubs());
+        model.addAttribute("purchsed", getUser().getPurchased());
     }
 
     protected void AddAttributesSubEdit(Model model, Long id) {
@@ -47,7 +48,7 @@ public class Attributes extends Main {
     protected void AddAttributesStatics(Model model) {
         AddAttributes(model);
         List<Statics> staticsList = staticsRepo.findAll();
-        int income = staticsList.stream().reduce(0, (integer, stat) -> integer + (stat.getCount() * stat.getSubs().getPrice()), Integer::sum);
+        int income = staticsList.stream().reduce(0, (integer, stat) -> integer + (stat.getCount() * stat.getSub().getPrice()), Integer::sum);
         model.addAttribute("income", income);
         model.addAttribute("statics", staticsList);
     }

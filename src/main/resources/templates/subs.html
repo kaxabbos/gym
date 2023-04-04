@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Абонементы - GYM</title>
+    <title>Абонементы</title>
 </head>
 <head th:insert="blocks/head :: head"></head>
 <body>
@@ -20,14 +20,36 @@
             <div th:each="sub : ${subs}" class="col-xl-4" style="margin-bottom: 10px;">
                 <img th:src="'/img/' + ${sub.file}" style="border-radius: 30px;padding: 5px;" width="100%">
                 <h3 th:text="${sub.name}"></h3>
-                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Цена: <span th:text="${sub.price}"></span></p>
-                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Срок действия: <span th:text="${sub.term}"></span> месяцев</p>
-                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Время посещения с <span th:text="${sub.start_by}"></span> до <span th:text="${sub.before}"></span></p>
-                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Приостановка абонемента: <span th:text="${sub.pause}"></span> дней</p>
-                <p th:if="${sub.description.length() > 0}" class="text-start" style="font-size: 20px;margin-bottom: 0;">Описание: <span th:text="${sub.description}"></span></p>
-                <a th:if="${role == 'CLIENT' and !user.inMySubs(sub.id)}" class="btn btn-primary" role="button" th:href="'/subs/buy/' + ${sub.id}" style="margin-right: 10px;margin-top: 5px;">Купить</a>
-                <a th:if="${role == 'MANAGER'}" class="btn btn-primary" role="button" th:href="'/subs/edit/' + ${sub.id}" style="margin-right: 10px;margin-top: 5px;">Редактировать</a>
-                <a th:if="${role == 'MANAGER'}" class="btn btn-danger" role="button" th:href="'/subs/delete/' + ${sub.id}" style="margin-top: 5px;">Удалить</a>
+                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Цена: <span
+                        th:text="${sub.price}"></span></p>
+                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Срок действия: <span
+                        th:text="${sub.term}"></span> месяцев</p>
+                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Время посещения с <span
+                        th:text="${sub.start_by}"></span> до <span th:text="${sub.before}"></span></p>
+                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Приостановка абонемента: <span
+                        th:text="${sub.pause}"></span> дней</p>
+                <p th:if="${sub.description.length() > 0}" class="text-start" style="font-size: 20px;margin-bottom: 0;">
+                    Описание: <span th:text="${sub.description}"></span></p>
+                <form th:if="${role == 'CLIENT' and !user.inMySubs(sub.id)}" th:action="'/subs/buy/' + ${sub.id}"
+                      method="post" class="mt-1">
+                    <div class="row">
+                        <div class="col">
+                            <select name="trainerId" class="form-select" style="width: 100%">
+                                <option value="0" label="Без тренера"></option>
+                                <option th:each="t : ${trainers}" th:value="${t.id}" th:label="${t.name}"></option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary" type="submit">
+                                Купить
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <a th:if="${role == 'MANAGER'}" class="btn btn-primary" role="button"
+                   th:href="'/subs/edit/' + ${sub.id}" style="margin-right: 10px;margin-top: 5px;">Редактировать</a>
+                <a th:if="${role == 'MANAGER'}" class="btn btn-danger" role="button"
+                   th:href="'/subs/delete/' + ${sub.id}" style="margin-top: 5px;">Удалить</a>
             </div>
         </div>
     </div>

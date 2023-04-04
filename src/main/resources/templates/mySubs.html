@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Мои абонементы - GYM</title>
+    <title>Мои абонементы</title>
 </head>
 <head th:insert="blocks/head :: head"></head>
 <body>
@@ -11,15 +11,16 @@
     <div class="container">
         <h2 class="mb-5">&nbsp;Мои абонементы</h2>
         <div class="row">
-            <div th:each="sub : ${subs}" class="col-xl-4" style="margin-bottom: 10px;">
-                <img th:src="'/img/' + ${sub.file}" style="border-radius: 30px;padding: 5px;" width="100%">
-                <h3 th:text="${sub.name}"></h3>
-                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Цена: <span th:text="${sub.price}"></span></p>
-                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Срок действия: <span th:text="${sub.term}"></span> месяцев</p>
-                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Время посещения с <span th:text="${sub.start_by}"></span> до <span th:text="${sub.before}"></span></p>
-                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Приостановка абонемента: <span th:text="${sub.pause}"></span> дней</p>
-                <p th:if="${sub.description.length() > 0}" class="text-start" style="font-size: 20px;margin-bottom: 0;">Описание: <span th:text="${sub.description}"></span></p>
-                <a class="btn btn-danger" role="button" th:href="'/subs/my/delete/' + ${sub.id}" style="margin-top: 5px;">Отменить</a>
+            <div th:each="p : ${purchsed}" class="col-xl-4" style="margin-bottom: 10px;">
+                <img th:src="'/img/' + ${p.sub.file}" style="border-radius: 30px;padding: 5px;" width="100%">
+                <h3 th:text="${p.sub.name}"></h3>
+                <p th:if="${p.trainer}" class="text-start" style="font-size: 20px;margin-bottom: 0;">Тренер: <span th:text="${p.trainer.name}"></span></p>
+                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Цена: <span th:text="${p.sub.price}"></span></p>
+                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Срок действия: <span th:text="${p.sub.term}"></span> месяцев</p>
+                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Время посещения с <span th:text="${p.sub.start_by}"></span> до <span th:text="${p.sub.before}"></span></p>
+                <p class="text-start" style="font-size: 20px;margin-bottom: 0;">Приостановка абонемента: <span th:text="${p.sub.pause}"></span> дней</p>
+                <p th:if="${p.sub.description.length() > 0}" class="text-start" style="font-size: 20px;margin-bottom: 0;">Описание: <span th:text="${p.sub.description}"></span></p>
+                <a class="btn btn-danger" role="button" th:href="'/subs/my/delete/' + ${p.id}" style="margin-top: 5px;">Отменить</a>
             </div>
         </div>
     </div>
