@@ -18,11 +18,11 @@ public class Purchased {
     @Column(nullable = false, updatable = false)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Subs sub;
     @ManyToOne(fetch = FetchType.LAZY)
     private Users owner;
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Trainers trainer;
 
     public Purchased(Subs sub, Users owner, Trainers trainer) {

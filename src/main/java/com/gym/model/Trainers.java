@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,6 +26,9 @@ public class Trainers {
     private String spec;
     private int price;
     private byte exp;
+
+    @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Purchased> purchaseds;
 
     public Trainers(String name, String file, String tel, String ach, String spec, int price, byte exp) {
         this.name = name;
